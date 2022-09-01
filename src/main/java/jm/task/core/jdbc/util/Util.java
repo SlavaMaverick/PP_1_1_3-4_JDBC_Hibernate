@@ -15,6 +15,7 @@ public class Util {
         try {
             Class.forName(DRIVER);
             connection = DriverManager.getConnection(HOST, LOGIN, PASSWORD);
+
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
