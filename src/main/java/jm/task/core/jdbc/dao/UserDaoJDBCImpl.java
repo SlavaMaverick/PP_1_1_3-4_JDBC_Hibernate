@@ -52,14 +52,15 @@ public class UserDaoJDBCImpl implements UserDao {
     }
 
     public void removeUserById(long id) {
-        try (Statement statement = Util.getConnection().createStatement()) {
-            String sql = "DELETE FROM test.users where id";
-            statement.executeUpdate(sql);
-            System.out.println("Пользователь c id = " + id + " удален");
+        try (PreparedStatement preparedStatement = Util.getConnection().prepareStatement("DELETE FROM test.users WHERE ID = ?")) {
+            preparedStatement.setLong(1, id);
+            preparedStatement.executeUpdate();
+            System.out.println("Пользователь с ID = " + id + " удален");
             Util.getConnection().close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
+
     }
 
     public List<User> getAllUsers() {
@@ -78,6 +79,7 @@ public class UserDaoJDBCImpl implements UserDao {
                 user.setAge(resultSet.getByte("age"));
                 allUser.add(user);
             }
+
             Util.getConnection().close();
         } catch (Exception e) {
             e.printStackTrace();
