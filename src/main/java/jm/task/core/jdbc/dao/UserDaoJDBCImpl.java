@@ -21,7 +21,6 @@ public class UserDaoJDBCImpl implements UserDao {
                     "age tinyint, " +
                     "PRIMARY KEY (id))");
             System.out.println("Таблица создана");
-            Util.getConnection().close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -31,7 +30,6 @@ public class UserDaoJDBCImpl implements UserDao {
         try (Statement statement = Util.getConnection().createStatement()) {
             statement.executeUpdate("Drop table if exists test.users");
             System.out.println("Таблица удалена");
-            Util.getConnection().close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -44,7 +42,6 @@ public class UserDaoJDBCImpl implements UserDao {
             preparedStatement.setString(2, lastName);
             preparedStatement.setByte(3, age);
             preparedStatement.executeUpdate();
-            Util.getConnection().close();
             System.out.println("Пользователь с именем " + name + " добавлен в базу данных");
         } catch (SQLException e) {
             e.printStackTrace();
@@ -56,7 +53,6 @@ public class UserDaoJDBCImpl implements UserDao {
             preparedStatement.setLong(1, id);
             preparedStatement.executeUpdate();
             System.out.println("Пользователь с ID = " + id + " удален");
-            Util.getConnection().close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -80,7 +76,6 @@ public class UserDaoJDBCImpl implements UserDao {
                 allUser.add(user);
             }
 
-            Util.getConnection().close();
         } catch (Exception e) {
             e.printStackTrace();
 
@@ -93,7 +88,6 @@ public class UserDaoJDBCImpl implements UserDao {
         try (Statement statement = Util.getConnection().createStatement()) {
             statement.executeUpdate(sql);
             System.out.println("Таблица очищена");
-            Util.getConnection().close();
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("Таблицу не удалось очистить");
